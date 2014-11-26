@@ -11,6 +11,6 @@ RUN rm -rf /var/lib/apt/lists/*
 ADD . /app
 WORKDIR /app
 
-ENV TMPDIR=/app/tmp
+ENV TMPDIR /app/tmp
 EXPOSE 80
 CMD ["node", "--harmony", "app"]
