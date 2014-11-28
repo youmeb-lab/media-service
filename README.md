@@ -80,6 +80,27 @@ module.exports = function (config, storages) {
 
 > [保持統一] 所有 Storage 的第一個參數必須是 Storage 名稱，第二個參數是 `options`，`options` 必須是個 `Object`
 
+```javascript
+var util = require('util');
+
+module.exports = function (Storage) {
+  util.inherits(CustomStorage, Storage);
+
+  return CustomStorage;
+
+  var proto = CustomStorage.prototype;
+
+  function CustomStorage(name, options) {
+    options || (options = {});
+    Storage.call(name);
+  }
+
+  proto.serve = function *serve() {
+    // ...
+  };
+};
+```
+
 ### Storage 名稱建議
 
 Storage 名稱不要跟範例一樣用 `local` 或 `S3` 這種按處存機制命名的方式，而是透過用途，像是儲存頭像的 Storage 可以命名為 `avatar`，這樣切換後端處存方式會比較方便，可能一開始頭像處存在 Local，後來改到 S3，那我們只需要把原本名稱為 `avatar` 的 `LocalStorage` 換成名稱同樣為 `avatar` 的 `S3Storage`。
