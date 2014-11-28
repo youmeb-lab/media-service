@@ -6,6 +6,14 @@ module.exports = function (config, storages) {
   config.port = process.env.MEDIA_SERVICE_PORT || 80;
   config.autoRestart = true;
 
+  // access control
+  config.enableAccessControl = true;
+  config.accessControl = {
+    // [ '192.168.*.*', '127.0.0.1' ]
+    write: [ '127.0.0.1' ],
+    read: [ '127.0.0.1' ]
+  };
+
   // log
   config.logDir = process.env.MEDIA_SERVICE_LOG_DIR || path.join(__dirname, 'log');
   config.logBackCopies = process.env.MEDIA_SERVICE_LOG_BACK_COPIES || 3;

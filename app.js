@@ -5,15 +5,17 @@ var gzip = require('koa-gzip');
 var etag = require('koa-etag');
 var cluster = require('koa-cluster');
 var conditional = require('koa-conditional-get');
-var config = require('./config');
-var errorHandler = require('./middlewares/error-handler');
-var mobileDetect = require('./middlewares/mobile-detect');
-var parsePath = require('./middlewares/parse-path');
-var favicon = require('./middlewares/favicon');
-var upload = require('./middlewares/upload');
+
+var log = require('./logger');
 var view = require('./middlewares/view');
 var home = require('./middlewares/home');
-var log = require('./logger');
+var upload = require('./middlewares/upload');
+var config = require('./config');
+var favicon = require('./middlewares/favicon');
+var parsePath = require('./middlewares/parse-path');
+var mobileDetect = require('./middlewares/mobile-detect');
+var errorHandler = require('./middlewares/error-handler');
+var accessControl = require('./middlewares/access-control');
 
 Object.defineProperty(app.context, 'size', {
   get: function () {
@@ -24,6 +26,11 @@ Object.defineProperty(app.context, 'size', {
 })
 
 app.use(errorHandler);
+
+if (config.enableAccessControl) {
+  app.use(accessControl);
+}
+
 app.use(gzip());
 app.use(conditional());
 app.use(etag());

@@ -11,6 +11,7 @@
   "dependencies": {
     "bunyan": "^1.2.3",
     "co-busboy": "^1.2.0",
+    "ipchecker": "0.0.2",
     "koa": "^0.13.0",
     "koa-cluster": "git+https://github.com/i18n-stream/koa-cluster.git",
     "koa-compose": "^2.3.0",
