@@ -105,6 +105,23 @@ module.exports = function (Storage) {
 
 Storage 名稱不要跟範例一樣用 `local` 或 `S3` 這種按處存機制命名的方式，而是透過用途，像是儲存頭像的 Storage 可以命名為 `avatar`，這樣切換後端處存方式會比較方便，可能一開始頭像處存在 Local，後來改到 S3，那我們只需要把原本名稱為 `avatar` 的 `LocalStorage` 換成名稱同樣為 `avatar` 的 `S3Storage`。
 
+### 讀寫權限
+
+media-service 用最單純的方式來控制誰可以存取哪些 API，IP 白名單，預設這個選想是關閉的，我們要在 Config 中開啟：
+
+```javascript
+config.enableAccessControl = true;
+```
+
+設定白名單
+
+```javascript
+config.accessControl = {
+  read: [ '*.*.*.*' ],
+  write: [ '220.134.*.*' ]
+};
+```
+
 ### #serve(ctx)
 
 __[GeneratorFunction]__
