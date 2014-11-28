@@ -22,7 +22,7 @@ function *sendFile(next) {
       yield* next;
       return;
     } else {
-      yield file.resize();
+      this.body = yield file.resize();
     }
   }
 
