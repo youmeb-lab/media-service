@@ -1,3 +1,4 @@
 'use strict';
 
-exports.local = require('./local');
+exports.Storage = require('./storage');
+exports.LocalStorage = require('./local');

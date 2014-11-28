@@ -13,19 +13,19 @@ module.exports = function *upload(next) {
     return;
   }
 
-  if (this.parsedPath.path === '/') {
+  if (this.file.originalPath === '/') {
     this.status = 403;
     throw new Error('You can\'t upload media to \'/\'');
   }
 
-  var file = yield parse(this, {
+  var stream = yield parse(this, {
     autoFields: true
   });
 
-  yield this.parsedPath.storage.save(file, this.parsedPath.path);
+  yield this.file.save(stream);
 
   this.body = {
-    service: this.parsedPath.service,
-    url: this.parsedPath.storage.url(this.parsedPath.path)
+    storage: this.file.storageName,
+    url: this.file.url
   };
 };

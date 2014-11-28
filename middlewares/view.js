@@ -1,7 +1,5 @@
 'use strict';
 
-var sharp = require('sharp');
-
 module.exports = function *(next) {
   if (this.method !== 'GET') {
     yield* next;
@@ -16,30 +14,21 @@ module.exports = function *(next) {
 };
 
 function *sendFile(next) {
-  var parsed = this.parsedPath;
-  var filepath = parsed.path;
-  var exists = yield parsed.storage.exists(filepath);
+  var file = this.file;
+  var exists = yield file.exists();
 
   if (!exists) {
-    if (parsed.size === 'normal') {
+    if (file.isOriginal) {
       yield* next;
       return;
     } else {
-      var transform = sharp()
-        .resize(parsed.width, parsed.height)
-        .crop(sharp.gravity.center);
-
-      yield parsed.storage.resize(
-        parsed.originalPath,
-        parsed.path,
-        transform
-      );
+      yield file.resize();
     }
   }
 
-  yield parsed.storage.serve.call(this);
+  yield file.serve(this);
 }
 
 function *listImages(next) {
-  this.body = yield this.parsedPath.storage.list(this.parsedPath.path);
+  this.body = yield this.file.getAvailableSizes();
 }
