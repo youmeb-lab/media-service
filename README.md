@@ -155,8 +155,8 @@ http://localhost/[storage]/[filepath]?size=[size name]
 
 ## Todo
 
-[ ] S3Storage
-[ ] `sizes` 更多的設定，不是單純的簡單設定，還要可以設定切圖方式
+ - [ ] S3Storage
+ - [ ] `sizes` 更多的設定，不是單純的簡單設定，還要可以設定切圖方式
 
 ## License
 
