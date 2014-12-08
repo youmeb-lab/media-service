@@ -6,6 +6,11 @@ module.exports = function (config, storages) {
   config.port = process.env.MEDIA_SERVICE_PORT || 80;
   config.autoRestart = true;
 
+  config.progressive = true;
+  config.metadata = false;
+  config.quality = 90;
+  config.webp = true;
+
   // access control
   config.enableAccessControl = true;
   config.accessControl = {

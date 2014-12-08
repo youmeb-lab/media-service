@@ -2,8 +2,9 @@
 
 var path = require('path');
 var sharp = require('sharp');
-var storages = require('./config').storages;
-var sizes = require('./config').sizes;
+var config = require('./config');
+var storages = config.storages;
+var sizes = config.sizes;
 
 var DIR = Symbol('dir');
 var SIZE = Symbol('size');
@@ -92,8 +93,13 @@ File.prototype = {
 
   resize: function *() {
     var transform = sharp()
-      .resize(this.width, this.height)
-      .crop(sharp.gravity.center);
+      .resize(this.width, this.height);
+
+    config.metadata && transform.etadata();
+    config.progressive && transform.progressive();
+    config.quality && transform.quality(config.quality | 0);
+    config.webp && transform.webp();
+    transform.crop(sharp.gravity.center);
 
     return yield this.storage.resize(
       this.originalPath, this.path, transform);
