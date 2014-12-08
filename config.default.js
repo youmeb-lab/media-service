@@ -25,9 +25,9 @@ module.exports = function (config, storages) {
 
   // size
   config.sizes = {
-    'small-avatar': '16x16',
-    'avatar': '120x120',
-    'big-avatar': '240x240'
+    'small-avatar': '16x16:center',
+    'avatar': '120x120:center',
+    'big-avatar': '240x240:center'
   };
 
   // mobile detect

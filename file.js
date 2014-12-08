@@ -8,6 +8,7 @@ var sizes = config.sizes;
 
 var DIR = Symbol('dir');
 var SIZE = Symbol('size');
+var CROP = Symbol('crop');
 var WIDTH = Symbol('width');
 var HEIGHT = Symbol('height');
 var STORAGE = Symbol('storage');
@@ -17,7 +18,10 @@ module.exports = File;
 function File(data) {
   data || (data = {});
 
-  var size = sizes[data.size];
+  var size = sizes[data.size].split(':');
+  
+  this[CROP] = sharp.gravity[size[1]] || sharp.gravity['center'];
+  size = size[0];
 
   if (size) {
     size = size.split('x');
